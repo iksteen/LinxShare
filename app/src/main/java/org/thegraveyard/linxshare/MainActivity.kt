@@ -116,6 +116,7 @@ class MainActivity : AppCompatActivity() {
         btn_upload.setOnClickListener {
             val linxUrl = et_linx_url.text.toString()
             val deleteKey = et_delete_key.text.toString()
+            val apiKey = et_api_key.text.toString()
             val expiration = (spinner_expiration.selectedItem as Expiry).expiration
             val randomizeFilename = cb_randomize_filename.isChecked
             val filename = etFilename.text.toString()
@@ -126,6 +127,7 @@ class MainActivity : AppCompatActivity() {
                 intent,
                 linxUrl,
                 deleteKey,
+                apiKey,
                 expiration,
                 randomizeFilename,
                 filename
@@ -159,6 +161,7 @@ class MainActivity : AppCompatActivity() {
         intent: Intent,
         linxUrl: String,
         deleteKey: String,
+        apiKey: String,
         expiration: Long,
         randomizeFilename: Boolean,
         filename: String
@@ -186,6 +189,10 @@ class MainActivity : AppCompatActivity() {
                     .addHeader("Accept", "application/json")
                     .addHeader("Linx-Delete-Key", deleteKey)
                     .addHeader("Linx-Expiry", expiration.toString())
+
+                if ( apiKey != "" ) {
+                    builder.addHeader("Linx-Api-Key", apiKey)
+                }
 
                 val request: Request = if (randomizeFilename) {
                     builder

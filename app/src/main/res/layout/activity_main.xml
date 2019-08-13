@@ -29,13 +29,20 @@
     <EditText
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:inputType="textUri"
+            android:inputType="textPassword"
             android:ems="10"
             android:id="@+id/et_api_key"
             android:layout_marginEnd="8dp"
             app:layout_constraintEnd_toEndOf="parent" android:layout_marginTop="272dp"
             app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toEndOf="@+id/tv_linx_url"
             android:layout_marginStart="8dp" app:layout_constraintHorizontal_bias="1.0"/>
+    <TextView
+            android:text="Api Key:"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_api_key" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="12dp" android:layout_marginTop="32dp"
+            app:layout_constraintTop_toBottomOf="@+id/tv_filename"/>
     <TextView
             android:text="Delete key:"
             android:layout_width="wrap_content"
@@ -103,12 +110,5 @@
             app:layout_constraintTop_toBottomOf="@+id/cb_randomize_filename" android:layout_marginEnd="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/cb_randomize_filename"/>
-    <TextView
-            android:text="Api Key:"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/tv_api_key" app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="12dp" android:layout_marginTop="32dp"
-            app:layout_constraintTop_toBottomOf="@+id/tv_filename"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
