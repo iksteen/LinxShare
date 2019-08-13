@@ -36,7 +36,6 @@ class MainActivity : AppCompatActivity() {
     @Serializable
     data class LinxResponseModel(
         val delete_key: String,
-        val api_key: String,
         val direct_url: String,
         val expiry: String,
         val filename: String,
@@ -142,13 +141,14 @@ class MainActivity : AppCompatActivity() {
 
         val linxUrl = et_linx_url.text.toString()
         val deleteKey = et_delete_key.text.toString()
+        val apiKey = et_api_key.text.toString()
         val expiration = (spinner_expiration.selectedItem as Expiry).expiration
         val randomizeFilename = cb_randomize_filename.isChecked
 
         with (getPreferences(Context.MODE_PRIVATE).edit()) {
             putString(LINX_SERVER_KEY, linxUrl)
             putString(DELETE_KEY_KEY, deleteKey)
-            putString(API_KEY_KEY, deleteKey)
+            putString(API_KEY_KEY, apiKey)
             putLong(EXPIRATION_KEY, expiration)
             putBoolean(RANDOMIZE_FILENAME_KEY, randomizeFilename)
             apply()
