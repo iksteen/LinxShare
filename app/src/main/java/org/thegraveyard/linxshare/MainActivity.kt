@@ -189,10 +189,7 @@ class MainActivity : AppCompatActivity() {
                     .addHeader("Accept", "application/json")
                     .addHeader("Linx-Delete-Key", deleteKey)
                     .addHeader("Linx-Expiry", expiration.toString())
-
-                if ( apiKey != "" ) {
-                    builder.addHeader("Linx-Api-Key", apiKey)
-                }
+                    .addHeader("Linx-Api-Key", apiKey)
 
                 val request: Request = if (randomizeFilename) {
                     builder
