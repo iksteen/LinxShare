@@ -1,28 +1,26 @@
 package org.thegraveyard.linxshare
 
-import android.content.Intent
-import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
-import android.os.Parcelable
-import okhttp3.MediaType
-import okhttp3.RequestBody
-import okhttp3.MediaType.Companion.toMediaType
-import okhttp3.OkHttpClient
-import okio.BufferedSink
-import kotlin.concurrent.thread
-import okio.source
-import okhttp3.Request
-import kotlinx.serialization.*
-import kotlinx.serialization.json.*
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
+import android.os.Bundle
+import android.os.Parcelable
+import android.util.Log
 import android.webkit.MimeTypeMap
-import android.widget.Toast
-import kotlinx.android.synthetic.main.activity_main.*
 import android.widget.ArrayAdapter
-import okhttp3.MultipartBody
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonConfiguration
+import okhttp3.*
+import okhttp3.MediaType.Companion.toMediaType
+import okio.BufferedSink
+import okio.source
+import kotlin.concurrent.thread
 
 class MainActivity : AppCompatActivity() {
     companion object {
@@ -35,13 +33,6 @@ class MainActivity : AppCompatActivity() {
 
     @Serializable
     data class LinxResponseModel(
-        val delete_key: String,
-        val direct_url: String,
-        val expiry: String,
-        val filename: String,
-        val mimetype: String,
-        val sha256sum: String,
-        val size: String,
         val url: String
     )
 
@@ -206,21 +197,53 @@ class MainActivity : AppCompatActivity() {
                         .build()
                 }
 
-                client.newCall(request).execute().use { response ->
-                    response.body?.string()?.let { body ->
-                        val json = Json(JsonConfiguration.Stable)
-                        json.parse(LinxResponseModel.serializer(), body).let { lr ->
-                            val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-                            val clip = ClipData.newPlainText("linx url", lr.url)
-                            clipboard.setPrimaryClip(clip)
-                            runOnUiThread {
-                                val toast = Toast.makeText(applicationContext, "Copied ${lr.url} to clipboard", Toast.LENGTH_LONG)
-                                toast.show()
-                            }
-                        }
+                try {
+                    client.newCall(request).execute().use { response ->
+                        handleResponse(response)
                     }
                 }
+                catch (e: Exception) {
+                    Log.e("MainActivity", "Request failed: ${e}")
+                    handleFailure()
+                }
             }
+        }
+    }
+
+    private fun handleResponse(response: Response) {
+        val body = response.body?.string()
+        if (response.isSuccessful && body != null) {
+            val json = Json(JsonConfiguration.Stable.copy(strictMode=false))
+            val lr = json.parse(LinxResponseModel.serializer(), body)
+            handleSuccess(lr.url)
+        } else {
+            handleFailure()
+        }
+    }
+
+    private fun handleSuccess(url: String) {
+        val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        val clip = ClipData.newPlainText("linx url", url)
+        clipboard.setPrimaryClip(clip)
+
+        runOnUiThread {
+            val toast = Toast.makeText(applicationContext, "Copied ${url} to clipboard", Toast.LENGTH_SHORT)
+            toast.show()
+            finish()
+        }
+    }
+
+    private fun handleFailure() {
+        runOnUiThread {
+            val toast = Toast.makeText(
+                applicationContext,
+                "Failed to upload to linx-server, check settings!",
+                Toast.LENGTH_LONG
+            )
+            toast.show()
+
+            btn_upload.isEnabled = compatibleIntent
+            btn_cancel.isEnabled = compatibleIntent
         }
     }
 }
