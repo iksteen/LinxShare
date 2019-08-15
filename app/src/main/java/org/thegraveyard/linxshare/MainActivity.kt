@@ -28,6 +28,7 @@ class MainActivity : AppCompatActivity() {
     companion object {
         private const val LINX_SERVER_KEY = "linx_server"
         private const val DELETE_KEY_KEY = "delete_key"
+        private const val API_KEY_KEY = "api_key"
         private const val EXPIRATION_KEY = "expiration"
         private const val RANDOMIZE_FILENAME_KEY = "randomize_filename"
     }
@@ -76,10 +77,12 @@ class MainActivity : AppCompatActivity() {
         getPreferences(Context.MODE_PRIVATE).let { sharedPrefs ->
             val linxUrl = sharedPrefs.getString(LINX_SERVER_KEY, "https://")
             val deleteKey = sharedPrefs.getString(DELETE_KEY_KEY, "")
+            val apiKey = sharedPrefs.getString(API_KEY_KEY, "")
             val expiration = sharedPrefs.getLong(EXPIRATION_KEY, 0L)
             val randomizeFilename = sharedPrefs.getBoolean(RANDOMIZE_FILENAME_KEY, true)
             et_linx_url.setText(linxUrl)
             et_delete_key.setText(deleteKey)
+            et_api_key.setText(apiKey)
             spinner_expiration.setSelection(expirations.indexOfFirst { it.expiration == expiration })
             cb_randomize_filename.isChecked = randomizeFilename
         }
@@ -113,6 +116,7 @@ class MainActivity : AppCompatActivity() {
         btn_upload.setOnClickListener {
             val linxUrl = et_linx_url.text.toString()
             val deleteKey = et_delete_key.text.toString()
+            val apiKey = et_api_key.text.toString()
             val expiration = (spinner_expiration.selectedItem as Expiry).expiration
             val randomizeFilename = cb_randomize_filename.isChecked
             val filename = etFilename.text.toString()
@@ -123,6 +127,7 @@ class MainActivity : AppCompatActivity() {
                 intent,
                 linxUrl,
                 deleteKey,
+                apiKey,
                 expiration,
                 randomizeFilename,
                 filename
@@ -138,12 +143,14 @@ class MainActivity : AppCompatActivity() {
 
         val linxUrl = et_linx_url.text.toString()
         val deleteKey = et_delete_key.text.toString()
+        val apiKey = et_api_key.text.toString()
         val expiration = (spinner_expiration.selectedItem as Expiry).expiration
         val randomizeFilename = cb_randomize_filename.isChecked
 
         with (getPreferences(Context.MODE_PRIVATE).edit()) {
             putString(LINX_SERVER_KEY, linxUrl)
             putString(DELETE_KEY_KEY, deleteKey)
+            putString(API_KEY_KEY, apiKey)
             putLong(EXPIRATION_KEY, expiration)
             putBoolean(RANDOMIZE_FILENAME_KEY, randomizeFilename)
             apply()
@@ -154,6 +161,7 @@ class MainActivity : AppCompatActivity() {
         intent: Intent,
         linxUrl: String,
         deleteKey: String,
+        apiKey: String,
         expiration: Long,
         randomizeFilename: Boolean,
         filename: String
@@ -181,6 +189,7 @@ class MainActivity : AppCompatActivity() {
                     .addHeader("Accept", "application/json")
                     .addHeader("Linx-Delete-Key", deleteKey)
                     .addHeader("Linx-Expiry", expiration.toString())
+                    .addHeader("Linx-Api-Key", apiKey)
 
                 val request: Request = if (randomizeFilename) {
                     builder
