@@ -1,8 +1,7 @@
 package org.thegraveyard.linxshare
 
 import android.os.Bundle
-import androidx.preference.PreferenceDataStore
-import androidx.preference.PreferenceFragmentCompat
+import androidx.preference.*
 
 class UploadSettingsFragment : PreferenceFragmentCompat() {
     class DataStore(private val parent: UploadSettingsFragment) : PreferenceDataStore() {
@@ -54,15 +53,44 @@ class UploadSettingsFragment : PreferenceFragmentCompat() {
         expiration = (sharedPreferences.getString("expiration", "0") ?: "0").toInt()
         randomizeFilename = sharedPreferences.getBoolean("randomize_filename", true)
 
-        findPreference("delete_key").preferenceDataStore = dataStore
-        findPreference("expiration").preferenceDataStore = dataStore
-        findPreference("randomize_filename").preferenceDataStore = dataStore
-        findPreference("filename").preferenceDataStore = dataStore
+        findPreference<EditTextPreference>("delete_key")?.let {
+            it.preferenceDataStore = dataStore
+            it.text = deleteKey
+
+            it.setSummaryProvider { preference ->
+                if (preferenceManager.sharedPreferences.getString(preference.key, "").isNullOrEmpty()) {
+                    getString(R.string.no_delete_key_set)
+                } else {
+                    getString(R.string.delete_key_set)
+                }
+            }
+        }
+
+        findPreference<ListPreference>("expiration")?.let {
+            it.preferenceDataStore = dataStore
+            it.value = expiration.toString()
+
+            it.setSummaryProvider { preference ->
+                val value = preferenceManager.sharedPreferences.getString(preference.key, "0")!!
+                it.entries[it.findIndexOfValue(value)]
+            }
+        }
+
+        findPreference<SwitchPreferenceCompat>("randomize_filename")?.let {
+            it.preferenceDataStore = dataStore
+            it.isChecked = randomizeFilename
+        }
+
+        findPreference<EditTextPreference>("filename")?.let {
+            it.preferenceDataStore = dataStore
+            it.summaryProvider = EditTextPreference.SimpleSummaryProvider.getInstance()
+            it.text = filename
+        }
 
         onRandomizeFilenameChanged(randomizeFilename)
     }
 
     fun onRandomizeFilenameChanged(value: Boolean) {
-        findPreference("filename").isVisible = !value
+        findPreference<Preference>("filename")?.isVisible = !value
     }
 }
