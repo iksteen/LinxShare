@@ -59,7 +59,7 @@ class MainActivity : AppCompatActivity() {
         expirations.add(Expiry(3600 * 24 * 365, "1 year"))
         expirations.add(Expiry(0, "never"))
 
-        spinner_expiration.adapter = ArrayAdapter<Expiry>(
+        spinner_expiration.adapter = ArrayAdapter(
             applicationContext,
             android.R.layout.simple_spinner_dropdown_item,
             expirations
@@ -86,9 +86,9 @@ class MainActivity : AppCompatActivity() {
                         uri.lastPathSegment?.let {
                             if (!it.contains('.')) {
                                 val ext = MimeTypeMap.getSingleton().getExtensionFromMimeType(intent.type)
-                                etFilename.setText("${it}.${ext}")
+                                et_filename.setText("${it}.${ext}")
                             } else {
-                                etFilename.setText(uri.lastPathSegment ?: "")
+                                et_filename.setText(uri.lastPathSegment ?: "")
                             }
                         }
                     }
@@ -98,10 +98,10 @@ class MainActivity : AppCompatActivity() {
 
         btn_upload.isEnabled = compatibleIntent
         btn_cancel.isEnabled = compatibleIntent
-        etFilename.isEnabled = compatibleIntent && !cb_randomize_filename.isChecked
+        et_filename.isEnabled = compatibleIntent && !cb_randomize_filename.isChecked
 
         cb_randomize_filename.setOnCheckedChangeListener { _, b ->
-            etFilename.isEnabled = compatibleIntent && !b
+            et_filename.isEnabled = compatibleIntent && !b
         }
 
         btn_upload.setOnClickListener {
@@ -110,7 +110,7 @@ class MainActivity : AppCompatActivity() {
             val apiKey = et_api_key.text.toString()
             val expiration = (spinner_expiration.selectedItem as Expiry).expiration
             val randomizeFilename = cb_randomize_filename.isChecked
-            val filename = etFilename.text.toString()
+            val filename = et_filename.text.toString()
 
             btn_upload.isEnabled = false
             btn_cancel.isEnabled = false
