@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">LinxShare</string>
+    <string name="server_settings">Server settings</string>
+    <string name="default_upload_settings">Default upload settings</string>
+    <string name="upload_settings">Upload settings</string>
     <string name="linx_url">Linx URL</string>
     <string name="api_key">API key</string>
     <string name="delete_key">Delete key</string>

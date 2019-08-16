@@ -3,7 +3,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <PreferenceCategory
-            app:title="Server settings">
+            app:title="@string/server_settings">
         <EditTextPreference
                 app:defaultValue="https://"
                 app:title="@string/linx_url"
@@ -14,7 +14,7 @@
     </PreferenceCategory>
 
     <PreferenceCategory
-            app:title="Upload settings">
+            app:title="@string/default_upload_settings">
         <EditTextPreference
                 app:title="@string/delete_key"
                 app:key="delete_key"/>
