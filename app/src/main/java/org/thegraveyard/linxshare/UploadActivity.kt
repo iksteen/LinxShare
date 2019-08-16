@@ -129,7 +129,7 @@ class UploadActivity : AppCompatActivity() {
                 }
 
                 val builder = Request.Builder()
-                    .url("$linxUrl/upload/")
+                    .url("${linxUrl.trimEnd('/')}/upload/")
                     .addHeader("Accept", "application/json")
                     .addHeader("Linx-Delete-Key", deleteKey)
                     .addHeader("Linx-Expiry", expiration.toString())
