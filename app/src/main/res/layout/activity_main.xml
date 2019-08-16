@@ -8,7 +8,7 @@
         tools:context=".MainActivity">
 
     <TextView
-            android:text="Linx URL:"
+            android:text="@string/linx_url"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/tv_linx_url"
@@ -37,14 +37,14 @@
             app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toEndOf="@+id/tv_linx_url"
             android:layout_marginStart="8dp" app:layout_constraintHorizontal_bias="1.0"/>
     <TextView
-            android:text="Api Key:"
+            android:text="@string/api_key"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/tv_api_key" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="12dp" android:layout_marginTop="32dp"
             app:layout_constraintTop_toBottomOf="@+id/tv_filename"/>
     <TextView
-            android:text="Delete key:"
+            android:text="@string/delete_key"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/tv_delete_key"
@@ -60,7 +60,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/et_linx_url"/>
     <TextView
-            android:text="Expiration:"
+            android:text="@string/expiration"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/tv_expiration"
@@ -75,27 +75,27 @@
             app:layout_constraintTop_toBottomOf="@+id/et_delete_key"
             android:layout_marginEnd="8dp"/>
     <Button
-            android:text="Upload"
+            android:text="@string/upload"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/btn_upload" android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="8dp"/>
     <Button
-            android:text="Cancel"
+            android:text="@string/cancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/btn_cancel" android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="8dp"/>
     <CheckBox
-            android:text="Randomize filename"
+            android:text="@string/randomize_filename"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/cb_randomize_filename" app:layout_constraintStart_toStartOf="@+id/spinner_expiration"
             android:layout_marginTop="12dp" app:layout_constraintTop_toBottomOf="@+id/spinner_expiration"/>
     <TextView
-            android:text="Filename:"
+            android:text="@string/filename"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/tv_filename"

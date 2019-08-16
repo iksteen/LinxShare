@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">LinxShare</string>
+    <string name="linx_url">Linx URL:</string>
+    <string name="api_key">Api Key:</string>
+    <string name="delete_key">Delete key:</string>
+    <string name="expiration">Expiration:</string>
+    <string name="upload">Upload</string>
+    <string name="cancel">Cancel</string>
+    <string name="randomize_filename">Randomize filename</string>
+    <string name="filename">Filename:</string>
 </resources>
