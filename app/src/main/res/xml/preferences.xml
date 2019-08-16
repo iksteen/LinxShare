@@ -15,16 +15,16 @@
 
     <PreferenceCategory
             app:title="Upload settings">
-        <app:EditTextPreference
+        <EditTextPreference
                 app:title="@string/delete_key"
                 app:key="delete_key"/>
-        <app:ListPreference
+        <ListPreference
                 app:defaultValue="0"
                 app:title="@string/expiration"
                 app:entries="@array/expiration"
                 app:entryValues="@array/expirationValues"
                 app:key="expiration"/>
-        <app:SwitchPreferenceCompat
+        <SwitchPreferenceCompat
                 app:defaultValue="true"
                 app:title="@string/randomize_filename"
                 app:key="randomize_filename"/>
