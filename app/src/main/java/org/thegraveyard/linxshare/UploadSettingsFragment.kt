@@ -45,6 +45,14 @@ class UploadSettingsFragment : PreferenceFragmentCompat() {
         get() = dataStore.getString("filename", "") ?: ""
         set(value) = dataStore.putString("filename", value)
 
+    override fun onSaveInstanceState(bundle: Bundle) {
+        super.onSaveInstanceState(bundle)
+        bundle.putString("delete_key", deleteKey)
+        bundle.putInt("expiration", expiration)
+        bundle.putBoolean("randomize_filename", randomizeFilename)
+        bundle.putString("filename", filename)
+    }
+
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.upload_preferences, rootKey)
 
@@ -52,6 +60,13 @@ class UploadSettingsFragment : PreferenceFragmentCompat() {
         deleteKey = sharedPreferences.getString("delete_key", "") ?: ""
         expiration = (sharedPreferences.getString("expiration", "0") ?: "0").toInt()
         randomizeFilename = sharedPreferences.getBoolean("randomize_filename", true)
+
+        if (savedInstanceState != null) {
+            deleteKey = savedInstanceState.getString("delete_key", deleteKey)
+            expiration = savedInstanceState.getInt("expiration", expiration)
+            randomizeFilename = savedInstanceState.getBoolean("randomize_filename", randomizeFilename)
+            filename = savedInstanceState.getString("filename", filename)
+        }
 
         findPreference<EditTextPreference>("delete_key")?.let {
             it.preferenceDataStore = dataStore
