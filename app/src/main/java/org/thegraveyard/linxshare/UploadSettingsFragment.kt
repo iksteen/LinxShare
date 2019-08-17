@@ -58,7 +58,7 @@ class UploadSettingsFragment : PreferenceFragmentCompat() {
             it.text = deleteKey
 
             it.setSummaryProvider { preference ->
-                if (preferenceManager.sharedPreferences.getString(preference.key, "").isNullOrEmpty()) {
+                if (this.deleteKey.isEmpty()) {
                     getString(R.string.no_delete_key_set)
                 } else {
                     getString(R.string.delete_key_set)
@@ -71,8 +71,7 @@ class UploadSettingsFragment : PreferenceFragmentCompat() {
             it.value = expiration.toString()
 
             it.setSummaryProvider { preference ->
-                val value = preferenceManager.sharedPreferences.getString(preference.key, "0")!!
-                it.entries[it.findIndexOfValue(value)]
+                it.entries[it.findIndexOfValue(this.expiration.toString())]
             }
         }
 
