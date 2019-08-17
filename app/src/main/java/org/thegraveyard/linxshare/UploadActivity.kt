@@ -7,10 +7,12 @@ import android.os.Parcelable
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.webkit.MimeTypeMap
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.PreferenceManager
+import kotlinx.android.synthetic.main.activity_upload.*
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonConfiguration
@@ -87,6 +89,8 @@ class UploadActivity : AppCompatActivity() {
             val expiration = uploadSettings.expiration
             val randomizeFilename = uploadSettings.randomizeFilename
             val filename = uploadSettings.filename
+
+            progress_overlay.visibility = View.VISIBLE
 
             handleSendImage(
                 intent,
@@ -180,6 +184,8 @@ class UploadActivity : AppCompatActivity() {
         clipboard.setPrimaryClip(clip)
 
         runOnUiThread {
+            progress_overlay.visibility = View.GONE
+
             val toast = Toast.makeText(applicationContext, "Copied ${url} to clipboard", Toast.LENGTH_SHORT)
             toast.show()
             finish()
@@ -188,6 +194,8 @@ class UploadActivity : AppCompatActivity() {
 
     private fun handleFailure() {
         runOnUiThread {
+            progress_overlay.visibility = View.GONE
+
             val toast = Toast.makeText(
                 applicationContext,
                 "Failed to upload to linx-server, check settings!",
