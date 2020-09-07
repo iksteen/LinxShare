@@ -2,6 +2,8 @@
 
 An Android client for [linx-server](https://github.com/andreimarcu/linx-server).
 
+License: <a href="https://nl.wikipedia.org/wiki/WTFPL">WTFPL</a>
+
 # Screenshots
 ## Main settings screen
 <a href="https://imgur.com/GwxaxrF.png"><img src="https://imgur.com/GwxaxrF.png" height="250"></a>
