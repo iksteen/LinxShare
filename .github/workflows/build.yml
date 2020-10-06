@@ -10,10 +10,19 @@ jobs:
     runs-on: ubuntu-latest
     steps: 
       - uses: actions/checkout@v2
-      - name: build unsigned android release apk
+      - name: build android app
         run: ./gradlew assembleRelease
-      - name: upload unsigned android release apk
-        uses: actions/upload-artifact@v1
+      - name: sign android app
+        id: sign-android-app
+        uses: r0adkll/sign-android-release@v1
         with:
-          name: app
-          path: android/app/build/outputs/apk/release/app-release-unsigned.apk
+          releaseDirectory: app/build/outputs/apk/release
+          signingKeyBase64: ${{ secrets.SIGNING_KEY }}
+          alias: ${{ secrets.ALIAS }}
+          keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
+          keyPassword: ${{ secrets.KEY_PASSWORD }}
+      - name: upload artifact
+        uses: actions/upload-artifact@v2 
+        with: 
+          name: 'app-release' 
+          path: ${{ steps.sign-app.outputs.signedReleaseFile }}
