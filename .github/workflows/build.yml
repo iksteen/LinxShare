@@ -41,5 +41,5 @@ jobs:
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ${{ steps.sign-android-app.outputs.signedReleaseFile }}
-          asset_name: linxshare-{{ steps.tag_name.outputs.SOURCE_TAG }}.apk
+          asset_name: linxshare-${{ steps.tag_name.outputs.SOURCE_TAG }}.apk
           asset_content_type: application/zip
