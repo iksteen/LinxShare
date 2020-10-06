@@ -1,0 +1,19 @@
+name: build apk
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps: 
+      - uses: actions/checkout@v2
+      - name: build unsigned android release apk
+        run: ./gradlew assembleRelease
+      - name: upload unsigned android release apk
+        uses: actions/upload-artifact@v1
+        with:
+          name: app
+          path: android/app/build/outputs/apk/release/app-release-unsigned.apk
