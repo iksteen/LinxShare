@@ -25,4 +25,4 @@ jobs:
         uses: actions/upload-artifact@v2 
         with: 
           name: 'app-release' 
-          path: ${{ steps.sign-app.outputs.signedReleaseFile }}
+          path: ${{ steps.sign-android-app.outputs.signedReleaseFile }}
