@@ -13,9 +13,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.PreferenceManager
 import kotlinx.android.synthetic.main.activity_upload.*
-import kotlinx.serialization.Serializable
-import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.JsonConfiguration
+import kotlinx.serialization.*
+import kotlinx.serialization.json.*
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaType
 import okio.BufferedSink
@@ -30,6 +29,7 @@ class UploadActivity : AppCompatActivity() {
 
     private var compatibleIntent = false
     private val client = OkHttpClient()
+    private val json = Json { ignoreUnknownKeys = true }
 
     private lateinit var optionsMenu: Menu
 
@@ -160,7 +160,7 @@ class UploadActivity : AppCompatActivity() {
                     }
                 }
                 catch (e: Exception) {
-                    Log.e("MainActivity", "Request failed: ${e}")
+                    Log.e("MainActivity", "Request failed: $e")
                     handleFailure()
                 }
             }
@@ -170,8 +170,7 @@ class UploadActivity : AppCompatActivity() {
     private fun handleResponse(response: Response) {
         val body = response.body?.string()
         if (response.isSuccessful && body != null) {
-            val json = Json(JsonConfiguration.Stable.copy(strictMode=false))
-            val lr = json.parse(LinxResponseModel.serializer(), body)
+            val lr = json.decodeFromString<LinxResponseModel>(body)
             handleSuccess(lr.url)
         } else {
             handleFailure()
@@ -186,7 +185,7 @@ class UploadActivity : AppCompatActivity() {
         runOnUiThread {
             progress_overlay.visibility = View.GONE
 
-            val toast = Toast.makeText(applicationContext, "Copied ${url} to clipboard", Toast.LENGTH_SHORT)
+            val toast = Toast.makeText(applicationContext, "Copied $url to clipboard", Toast.LENGTH_SHORT)
             toast.show()
             finish()
         }

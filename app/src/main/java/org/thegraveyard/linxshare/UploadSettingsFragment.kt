@@ -72,7 +72,7 @@ class UploadSettingsFragment : PreferenceFragmentCompat() {
             it.preferenceDataStore = dataStore
             it.text = deleteKey
 
-            it.setSummaryProvider { preference ->
+            it.setSummaryProvider {
                 if (this.deleteKey.isEmpty()) {
                     getString(R.string.no_delete_key_set)
                 } else {
@@ -85,7 +85,7 @@ class UploadSettingsFragment : PreferenceFragmentCompat() {
             it.preferenceDataStore = dataStore
             it.value = expiration.toString()
 
-            it.setSummaryProvider { preference ->
+            it.setSummaryProvider { _ ->
                 it.entries[it.findIndexOfValue(this.expiration.toString())]
             }
         }
