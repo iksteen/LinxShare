@@ -51,7 +51,7 @@ class UploadActivity : AppCompatActivity() {
 
         when {
             intent?.action == Intent.ACTION_SEND -> {
-                if (intent.type?.startsWith("image/") == true) {
+                if (intent.type?.startsWith("image/") == true || intent.type?.startsWith("video/") == true || intent.type?.startsWith("text/") == true) {
                     compatibleIntent = true
 
                     (intent.getParcelableExtra<Parcelable>(Intent.EXTRA_STREAM) as? Uri)?.let { uri ->
