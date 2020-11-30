@@ -51,17 +51,15 @@ class UploadActivity : AppCompatActivity() {
 
         when {
             intent?.action == Intent.ACTION_SEND -> {
-                if (intent.type?.startsWith("image/") == true || intent.type?.startsWith("video/") == true || intent.type?.startsWith("text/") == true) {
-                    compatibleIntent = true
+                compatibleIntent = true
 
-                    (intent.getParcelableExtra<Parcelable>(Intent.EXTRA_STREAM) as? Uri)?.let { uri ->
-                        uri.lastPathSegment?.let {
-                            if (!it.contains('.')) {
-                                val ext = MimeTypeMap.getSingleton().getExtensionFromMimeType(intent.type)
-                                uploadSettingsFragment.filename = "$it.$ext"
-                            } else {
-                                uploadSettingsFragment.filename = uri.lastPathSegment ?: ""
-                            }
+                (intent.getParcelableExtra<Parcelable>(Intent.EXTRA_STREAM) as? Uri)?.let { uri ->
+                    uri.lastPathSegment?.let {
+                        if (!it.contains('.')) {
+                            val ext = MimeTypeMap.getSingleton().getExtensionFromMimeType(intent.type)
+                            uploadSettingsFragment.filename = "$it.$ext"
+                        } else {
+                            uploadSettingsFragment.filename = uri.lastPathSegment ?: ""
                         }
                     }
                 }
