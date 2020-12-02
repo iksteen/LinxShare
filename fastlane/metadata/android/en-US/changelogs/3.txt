@@ -1,0 +1,1 @@
+You can now upload any filetype instead of only images.
