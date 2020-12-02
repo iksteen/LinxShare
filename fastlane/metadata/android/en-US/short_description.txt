@@ -1,1 +1,1 @@
-A linx-server android client
+Share images on your device with others through your self-hosted linx server

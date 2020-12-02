@@ -1,1 +1,5 @@
-Upload files to your linx-server with this android app!
+<i>LinxShare</i> is an app to share images on your device with others through your self-hosted <a href='https://github.com/andreimarcu/linx-server'>linx server</a>.
+
+To upload an image simply share it with the <i>LinxShare</i> app and press Upload. After <i>LinxShare</i> uploads your image to your linx server, the app copies the resulting URL to your device's clipboard so you can paste it anywhere.
+
+<i>LinxShare</i> lets you configure your linx server address and its API key (if required) and let's you set up a default delete key and expiration time. When uploading an image, you'll be able to override these settings and change the filename.
